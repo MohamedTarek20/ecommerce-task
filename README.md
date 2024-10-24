@@ -11,7 +11,70 @@ All endpoints require authentication. Use Laravel Sanctum for user authenticatio
 
 ## Endpoints
 
-### 1. Products
+### 1. Auth
+#### Login
+
+- **Endpoint**: `/login`
+- **Method**: `POST`
+- **Description**: Authenticate a user and retrieve an access token.
+- **Request Body** (application/x-www-form-urlencoded):
+  - `email`: The user's email address (string).
+  - `password`: The user's password (string).
+  
+- **Request Body**:
+  ```json
+  {   
+    "email":"user@user.com",
+    "password":"123123123"
+  }
+  ```
+- **Response**:
+    - **200 OK**: Returns the authentication token.
+    - **Example Response**:
+    ```json
+    {
+        "token": "1|dRnuBifkKVzEvZpYERUZzjlT1pEkpfDa0I4yCIEG9c55b23e"
+    }
+    ```
+   - **422 Unprocessable Content**: Returned for validation errors.
+  
+#### Register
+
+- **Endpoint**: `/register`
+- **Method**: `POST`
+- **Description**: Register a new user and create an accoun.
+- **Request Body** (application/x-www-form-urlencoded):
+  - `email`: The user's email address (string).
+  - `email`: The user's email address (string).
+  - `password`: The user's password (string).
+  - `password_confirmation`: Confirmation of the user's password (string).
+  
+- **Request Body**:
+  ```json
+  {   
+    "name":"user",
+    "email":"user@user.com",
+    "password":"123123123",
+    "password_confirmation":"123123123"
+  }
+  ```
+- **Response**:
+    - **201 Created**: Returns the newly created user and the authentication token.
+    <!-- - **Example Response**:
+    ```json
+    {
+    "user": {
+        "id": 1,
+        "name": "user",
+        "email": "user@user.com"
+    },
+    "token": "1|dRnuBifkKVzEvZpYERUZzjlT1pEkpfDa0I4yCIEG9c55b23e"
+    }
+    ``` -->
+   - **422 Unprocessable Content**: Returned for validation errors.
+
+
+### 2. Products
 
 #### Get All Products
 
@@ -137,3 +200,4 @@ All endpoints require authentication. Use Laravel Sanctum for user authenticatio
     }
     ```
    - **404 Not Found**: Returned if the order with the specified ID does not exist.
+   - **401 Unauthorized**: Returned when authentication is required but not provided.
